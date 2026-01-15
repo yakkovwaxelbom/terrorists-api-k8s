@@ -1,0 +1,9 @@
+docker build -t yakov234/threat-api:v1 .
+
+docker push yakov234/threat-api:v1 
+
+kubectl apply -f ./k8s
+
+oc expose svc threat-api-svc
+
+oc get routes

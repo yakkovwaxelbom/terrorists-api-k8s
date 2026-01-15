@@ -4,14 +4,14 @@ from pymongo import MongoClient
 
 @contextmanager
 def get_mongo_db():
-    host = os.getenv("HOST_MONGO", '127.0.0.1')
-    port = os.getenv("MONGO_PORT", '27017')
+    host = os.getenv("HOST_MONGO")
+    port = os.getenv("MONGO_PORT")
     username = os.getenv("MONGO_USERNAME")
     password = os.getenv("MONGO_PASSWORD")
-    db_name = os.getenv("MONGO_DB", 'threat_db')
+    db_name = os.getenv("MONGO_DB")
 
-    # mongo_uri = f"mongodb://{username}:{password}@{host}:{port}"
-    mongo_uri = f"mongodb://{host}:{port}"
+    mongo_uri = f"mongodb://{username}:{password}@{host}:{port}"
+    # mongo_uri = f"mongodb://{host}:{port}"
 
     client = MongoClient(mongo_uri)
 

@@ -3,13 +3,12 @@ FROM python:3.11-slim
 WORKDIR /app
 
 COPY requirements.txt .
-RUN pip install -r requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install fastapi uvicorn
 
-COPY main.py .
-COPY routes.py .
-COPY services.py .
-COPY models.py .
-COPY db.py .
+COPY . .
+
+ENV PATH="/usr/local/bin:/root/.local/bin:$PATH"
 
 EXPOSE 8000
 
