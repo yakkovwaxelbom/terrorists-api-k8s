@@ -7,8 +7,8 @@ from models import TerroristModel, Response
 
 
 class TerroristService:
-    def __init__(self):
-        pass
+    def __init__(self, db):
+        self._db = db
 
 
     def _data_analysis(self, file: UploadFile) -> pd.DataFrame:
@@ -34,8 +34,12 @@ class TerroristService:
         return terrorists
     
 
-    def _send_to_db():
-        pass
+    def _send_to_db(self, data: List[TerroristModel]):
+
+        data = [d.model_dump() for d in data]
+        self._db.top.insert_many(data)
+
+
     
 
     def process(self, file: UploadFile) -> List[TerroristModel]:
