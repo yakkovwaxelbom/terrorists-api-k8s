@@ -1,26 +1,22 @@
 from fastapi import routing, File, UploadFile, HTTPException, Depends
-import csv
-from io import StringIO
-import pandas as pd
+
+from services import TerroristService
+from models import Response
 
 terrorist_route = routing.APIRouter()
 
 
-@terrorist_route.post('/top-threats')
+@terrorist_route.post('/top-threats', response_model=Response, status_code=201)
 def create_terrorist(file: UploadFile = File(...)):
 
     if not file.filename.lower().endswith(".csv"):
         raise HTTPException(status_code=400, detail="Only CSV files are allowed")
 
     try:
-        contents = file.file.read().decode("utf-8")
-        df = pd.read_csv(StringIO(contents))
+        return TerroristService().process(file)
+
 
     except Exception as e:
         raise HTTPException(status_code=400, detail=f"Invalid CSV file: {str(e)}")
 
 
-    return {
-        "rows": len(df),
-        "columns": list(df.columns)
-    }
